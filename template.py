@@ -34,7 +34,7 @@ def FindFields(tmpl):
     if start:
         # We saw a { and then got to the end of the string with no }.
         raise ParseError(
-            "Field began line at offset {} but didn't end: {}".format(
+            "Field began at offset {} but didn't end: {}".format(
                 start, tmpl[start:pos]))
     return fields
 
