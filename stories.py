@@ -98,7 +98,7 @@ class StoryCollection(object):
 
     def Random(self):
         '''Return a random template number and its fields.'''
-        num = random.randint(len(self.templates))
+        num = random.randint(0, len(self.templates))
         return (num, self.Fields(num))
 
     def Populate(self, num, fieldmap):
