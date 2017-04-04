@@ -107,5 +107,5 @@ class StoryCollection(object):
 
     def Populate(self, num, fieldmap):
         '''Return a populated story from template #num.'''
-        return template.Replace(self.Template(num), fieldmap)
+        return Replace(self.Template(num), fieldmap)
 
