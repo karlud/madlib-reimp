@@ -7,7 +7,7 @@ import template
 class TemplateTest(unittest.TestCase):
     def testFindFields(self):
         text = "My {rumpus} ate my {bearclaw}."
-        correct = [('rumpus', 3), ('bearclaw', 19)]
+        correct = [('{rumpus}', 3), ('{bearclaw}', 19)]
         fields = template.FindFields(text)
         self.assertEqual(fields, correct)
 
@@ -26,10 +26,11 @@ class TemplateTest(unittest.TestCase):
         with self.assertRaises(template.ParseError):
             template.FindFields(test)
 
-    def testSpacedField(self):
-        test = "This has a {field with spaces}."
-        with self.assertRaises(template.ParseError):
-            template.FindFields(test)
+    def testReplace(self):
+        test = "These words {verb} no sense."
+        fields = {'{verb}': 'balloon'}
+        self.assertEqual("These words balloon no sense.",
+                         template.Replace(test, fields))
 
 
 if __name__ == '__main__':

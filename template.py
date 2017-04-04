@@ -6,7 +6,7 @@ import string
 class ParseError(Exception):
     '''Error parsing a story template.'''
 
-def FindFields(text):
+def FindFields(tmpl):
     '''Extract the fields from the raw text.''' 
     fields = []
     start = 0
@@ -14,19 +14,16 @@ def FindFields(text):
     # When you see a { for the first time, note its position and keep
     # reading, looking for a closing }.  When you find one, the range
     # from the { to the } is the field.
-    for pos, ch in enumerate(text):
+    for pos, ch in enumerate(tmpl):
         if not start and ch == '{':
             # Start of field.
             start = pos
-        elif start and ch in string.whitespace:
-            # No whitespace in field names.
-            raise ParseError("Whitespace in field name at offset {}".format(pos))
         elif start and ch == '}':
             # End of field.
-            match = text[start+1:pos]
+            match = tmpl[start:pos+1]
             fields.append((match, start))
             start = 0
-            if len(match) < 1:
+            if len(match) < 3:
                 # Fields can't have empty names.
                 raise ParseError("Empty field at offset {}".format(pos))
         elif not start and ch == '}':
@@ -37,5 +34,19 @@ def FindFields(text):
         # We saw a { and then got to the end of the string with no }.
         raise ParseError(
             "Field began line at offset {} but didn't end: {}".format(
-                start, text[start:pos]))
+                start, tmpl[start:pos]))
     return fields
+
+
+def Replace(tmpl, fieldmap):
+    '''Replace instances of fields with their corresponding values.
+    TODO: This is inefficient; it scans the string once per field.
+
+    Args:
+        tmpl: a piece of text with fields in it.
+        fieldmap: a dictionary from fields to values.
+    '''
+    for field, value in fieldmap.items():
+        tmpl = tmpl.replace(field, value)
+    return tmpl
+
