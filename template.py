@@ -10,24 +10,24 @@ class ParseError(Exception):
 def FindFields(tmpl):
     '''Extract the fields from the raw text.''' 
     fields = set()
-    start = 0
+    start = None
     # Read the text, one character at a time.
     # When you see a { for the first time, note its position and keep
     # reading, looking for a closing }.  When you find one, the range
     # from the { to the } is the field.
     for pos, ch in enumerate(tmpl):
-        if not start and ch == '{':
+        if start is None and ch == '{':
             # Start of field.
             start = pos
-        elif start and ch == '}':
+        elif start is not None and ch == '}':
             # End of field.
             match = tmpl[start:pos+1]
             if len(match) < 3:
                 # Fields can't have empty names.
                 raise ParseError("Empty field at offset {}".format(pos))
             fields.add(match)
-            start = 0
-        elif not start and ch == '}':
+            start = None
+        elif start is None and ch == '}':
             # We saw a } with no { before it.  That's an error.
             raise ParseError(
                 "}} with no matching {{ at offset {}.".format(pos))
@@ -56,6 +56,7 @@ def LoadDirectory(dirname="templates"):
 
     Returns:
         [(template, fields), ...]
+        Each 'template' is a string; each 'fields' is a set.
     '''
     templates = []
     for fname in os.listdir(dirname):

@@ -11,6 +11,12 @@ class TemplateTest(unittest.TestCase):
         fields = template.FindFields(text)
         self.assertEqual(fields, correct)
 
+    def testFindFieldAtStart(self):
+        text = "{name} likes {name}'s name, which is '{name}'."
+        correct = {'{name}'}
+        fields = template.FindFields(text)
+        self.assertEqual(fields, correct)
+
     def testEmptyField(self):
         test = "This has a {} empty field."
         with self.assertRaises(template.ParseError):
