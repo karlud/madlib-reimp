@@ -4,11 +4,13 @@
 import os
 import string
 
+
 class ParseError(Exception):
     '''Error parsing a story template.'''
 
+
 def FindFields(tmpl):
-    '''Extract the fields from the raw text.''' 
+    '''Extract the fields from the raw text.'''
     fields = set()
     start = None
     # Read the text, one character at a time.
@@ -51,6 +53,7 @@ def Replace(tmpl, fieldmap):
         tmpl = tmpl.replace(field, value)
     return tmpl
 
+
 def LoadDirectory(dirname="stories"):
     '''Load story templates from a directory.
 
@@ -69,5 +72,5 @@ def LoadDirectory(dirname="stories"):
         except ParseError:
             print("File {} didn't parse!".format(fname))
             raise
-    
+
     return templates
