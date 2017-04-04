@@ -96,12 +96,16 @@ class StoryCollection(object):
         '''Return the field set for template #num.'''
         return self.templates[num][1]
 
+    def Template(self, num):
+        '''Return the string template for #num.'''
+        return self.templates[num][0]
+
     def Random(self):
         '''Return a random template number and its fields.'''
-        num = random.randint(0, len(self.templates))
+        num = random.randint(0, len(self.templates) - 1)
         return (num, self.Fields(num))
 
     def Populate(self, num, fieldmap):
         '''Return a populated story from template #num.'''
-        return template.Replace(self.templates[num], fieldmap)
+        return template.Replace(self.templates[num][0], fieldmap)
 
