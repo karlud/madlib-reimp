@@ -10,7 +10,7 @@ class ParseError(Exception):
 
 
 def FindFields(tmpl):
-    '''Extract the fields from the raw text.
+    '''Extract field names from a story template string.
     
     Args:
         tmpl: a string containing template fields in {curlies}.
@@ -53,7 +53,7 @@ def Replace(tmpl, fieldmap):
     TODO: This is inefficient; it scans the string once per field.
 
     Args:
-        tmpl: a piece of text with fields in it.
+        tmpl: a story template string.
         fieldmap: a dictionary from fields to values.
     '''
     for field, value in fieldmap.items():
@@ -68,7 +68,7 @@ def LoadDirectory(dirname="stories"):
         dirname: the name of a directory to find story files in.
 
     Returns:
-        [(template, fields), ...]
+        A list of story templates, [(template, fields), ...]
         Each 'template' is a string; each 'fields' is a set.
     '''
     templates = []
