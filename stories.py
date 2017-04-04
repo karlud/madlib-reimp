@@ -101,7 +101,7 @@ class StoryCollection(object):
         num = random.randint(len(self.templates))
         return (num, self.Fields(num))
 
-    def Populate(self, num, fieldmap)
+    def Populate(self, num, fieldmap):
         '''Return a populated story from template #num.'''
         return template.Replace(self.templates[num], fieldmap)
 
