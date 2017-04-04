@@ -7,7 +7,7 @@ import template
 class TemplateTest(unittest.TestCase):
     def testFindFields(self):
         text = "My {rumpus} ate my {bearclaw}."
-        correct = [('{rumpus}', 3), ('{bearclaw}', 19)]
+        correct = {'{rumpus}', '{bearclaw}'}
         fields = template.FindFields(text)
         self.assertEqual(fields, correct)
 

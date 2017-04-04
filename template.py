@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # template.py - operations on story templates.
 
+import os
 import string
 
 class ParseError(Exception):
@@ -8,7 +9,7 @@ class ParseError(Exception):
 
 def FindFields(tmpl):
     '''Extract the fields from the raw text.''' 
-    fields = []
+    fields = set()
     start = 0
     # Read the text, one character at a time.
     # When you see a { for the first time, note its position and keep
@@ -21,11 +22,11 @@ def FindFields(tmpl):
         elif start and ch == '}':
             # End of field.
             match = tmpl[start:pos+1]
-            fields.append((match, start))
-            start = 0
             if len(match) < 3:
                 # Fields can't have empty names.
                 raise ParseError("Empty field at offset {}".format(pos))
+            fields.add(match)
+            start = 0
         elif not start and ch == '}':
             # We saw a } with no { before it.  That's an error.
             raise ParseError(
@@ -50,3 +51,22 @@ def Replace(tmpl, fieldmap):
         tmpl = tmpl.replace(field, value)
     return tmpl
 
+def LoadDirectory(dirname="templates"):
+    '''Load story templates from a directory.
+
+    Returns:
+        [(template, fields), ...]
+    '''
+    templates = []
+    for fname in os.listdir(dirname):
+        try:
+            path = os.path.join(dirname, fname)
+            if os.path.isfile(path) and not fname.startswith('.'):
+                tmpl = open(path).read()
+                fields = FindFields(tmpl)
+                templates.append((tmpl, fields))
+        except ParseError:
+            print("File {} didn't parse!".format(fname))
+            raise
+    
+    return templates
