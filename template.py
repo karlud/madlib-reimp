@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-# template.py - operations on story templates.
+# Operations on story templates.
 
 import os
-import string
 
 
 class ParseError(Exception):
