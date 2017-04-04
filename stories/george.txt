@@ -1,3 +1,3 @@
 George has a friend named {name}.
 George thinks that {name} is a great {sport} player.
-He {motion verb}s all day.
+{name} {motion verb}s all day.
