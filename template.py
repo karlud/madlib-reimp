@@ -2,6 +2,7 @@
 # Operations on story templates.
 
 import os
+import random
 
 
 class ParseError(Exception):
@@ -85,3 +86,22 @@ def LoadDirectory(dirname="stories"):
             raise
 
     return templates
+
+
+class StoryCollection(object):
+    def __init__(self):
+        self.templates = LoadDirectory()
+
+    def Fields(self, num):
+        '''Return the field set for template #num.'''
+        return self.templates[num][1]
+
+    def Random(self):
+        '''Return a random template number and its fields.'''
+        num = random.randint(len(self.templates))
+        return (num, self.Fields(num))
+
+    def Populate(self, num, fieldmap)
+        '''Return a populated story from template #num.'''
+        return template.Replace(self.templates[num], fieldmap)
+
