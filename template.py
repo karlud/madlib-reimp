@@ -51,7 +51,7 @@ def Replace(tmpl, fieldmap):
         tmpl = tmpl.replace(field, value)
     return tmpl
 
-def LoadDirectory(dirname="templates"):
+def LoadDirectory(dirname="stories"):
     '''Load story templates from a directory.
 
     Returns:
