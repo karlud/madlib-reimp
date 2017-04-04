@@ -10,7 +10,14 @@ class ParseError(Exception):
 
 
 def FindFields(tmpl):
-    '''Extract the fields from the raw text.'''
+    '''Extract the fields from the raw text.
+    
+    Args:
+        tmpl: a string containing template fields in {curlies}.
+
+    Returns:
+        A set of field names, e.g. {'{curlies}'}.
+    '''
     fields = set()
     start = None
     # Read the text, one character at a time.
@@ -57,6 +64,9 @@ def Replace(tmpl, fieldmap):
 def LoadDirectory(dirname="stories"):
     '''Load story templates from a directory.
 
+    Args:
+        dirname: the name of a directory to find story files in.
+
     Returns:
         [(template, fields), ...]
         Each 'template' is a string; each 'fields' is a set.
@@ -65,6 +75,8 @@ def LoadDirectory(dirname="stories"):
     for fname in os.listdir(dirname):
         try:
             path = os.path.join(dirname, fname)
+            # Skip subdirs and files whose names start with dot.
+            # (Dot files are usually text-editor temp files.)
             if os.path.isfile(path) and not fname.startswith('.'):
                 tmpl = open(path).read()
                 fields = FindFields(tmpl)
