@@ -23,7 +23,7 @@ class StoryHandler(http.server.BaseHTTPRequestHandler):
     def FieldForm(self):
         '''Make an HTML form for a set of fields.'''
         (num, fields) = self.collection.Random()
-        hidden = '<input type=hidden name="TEMPLATE", value="{}">\n'.format(num)
+        hidden = '<input type=hidden name="TEMPLATE" value="{}">\n'.format(num)
         inputs = [self._fieldform(field) for field in fields]
         head = '<!DOCTYPE html><title>Story Teller</title>\n'
         top = '<form method=POST>\n'
@@ -59,10 +59,8 @@ class StoryHandler(http.server.BaseHTTPRequestHandler):
         self.wfile.write(story.encode())
 
 
-
 if __name__ == '__main__':
     address = ('', PORT)
     StoryHandler.collection = stories.StoryCollection()
     httpd = http.server.HTTPServer(address, StoryHandler)
     httpd.serve_forever()
-
