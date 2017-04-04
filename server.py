@@ -4,6 +4,7 @@
 import http.server
 import os
 from urllib.parse import unquote, parse_qs
+from socketserver import ThreadingMixIn
 
 import stories
 
@@ -59,8 +60,12 @@ class StoryHandler(http.server.BaseHTTPRequestHandler):
         self.wfile.write(story.encode())
 
 
+class ThreadHTTPServer(ThreadingMixIn, http.server.HTTPServer):
+    pass
+
+
 if __name__ == '__main__':
     address = ('', PORT)
     StoryHandler.collection = stories.StoryCollection()
-    httpd = http.server.HTTPServer(address, StoryHandler)
+    httpd = ThreadHTTPServer(address, StoryHandler)
     httpd.serve_forever()
