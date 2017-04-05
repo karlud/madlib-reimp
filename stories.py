@@ -11,7 +11,6 @@ class ParseError(Exception):
 
 class StoryTemplate(object):
     def __init__(self, text=None, fname=None):
-        print("New storytemplate", text, fname)
         if fname is not None:
             self.text = open(fname).read()
         elif text is not None:
@@ -19,11 +18,12 @@ class StoryTemplate(object):
         else:
             raise ParseError("StoryTemplate needs text or a filename.")
         self.fields = self._FindFields(self.text)
-
+        if len(self.fields) == 0:
+            raise ParseError("Story template should have at least one field.")
 
     def _FindFields(self, tmpl):
         '''Extract field names from a story template string.
-        
+
         Args:
             tmpl: a string containing template fields in {curlies}.
 
@@ -59,7 +59,6 @@ class StoryTemplate(object):
                     start, tmpl[start:pos]))
         return fields
 
-
     def Populate(self, fieldmap):
         '''Return a populated version of this story, given particular fields.
 
@@ -79,7 +78,6 @@ class StoryCollection(object):
     def __init__(self, dirname="stories"):
         self.templates = self._LoadDirectory(dirname)
 
-
     def _LoadDirectory(self, dirname):
         '''Load story templates from a directory.
 
@@ -97,27 +95,21 @@ class StoryCollection(object):
             except ParseError:
                 print("File {} didn't parse!".format(fname))
                 raise
-
         return templates
-
 
     def Fields(self, num):
         '''Return the field set for template #num.'''
         return self.templates[num][1]
 
-
     def Template(self, num):
         '''Return the string template for #num.'''
         return self.templates[num].text
-
 
     def Random(self):
         '''Return a random template number and its fields.'''
         num = random.randint(0, len(self.templates) - 1)
         return (num, self.templates[num].fields)
 
-
     def Populate(self, num, fieldmap):
         '''Return a populated story from template #num.'''
         return self.templates[num].Populate(fieldmap)
-
