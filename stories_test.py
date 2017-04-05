@@ -8,35 +8,35 @@ class TemplateTest(unittest.TestCase):
     def testFindFields(self):
         text = "My {rumpus} ate my {bearclaw}."
         correct = {'{rumpus}', '{bearclaw}'}
-        fields = stories.FindFields(text)
+        fields = stories.StoryTemplate(text).fields
         self.assertEqual(fields, correct)
 
     def testFindFieldAtStart(self):
         text = "{name} likes {name}'s name, which is '{name}'."
         correct = {'{name}'}
-        fields = stories.FindFields(text)
+        fields = stories.StoryTemplate(text).fields
         self.assertEqual(fields, correct)
 
     def testEmptyField(self):
         test = "This has a {} empty field."
         with self.assertRaises(stories.ParseError):
-            stories.FindFields(test)
+            stories.StoryTemplate(test)
 
     def testUnclosedField(self):
         test = "This has an {unclosed."
         with self.assertRaises(stories.ParseError):
-            stories.FindFields(test)
+            stories.StoryTemplate(test)
 
     def testUnopenedField(self):
         test = "This has a } busted field."
         with self.assertRaises(stories.ParseError):
-            stories.FindFields(test)
+            stories.StoryTemplate(test)
 
     def testReplace(self):
         test = "These words {verb} no sense."
         fields = {'{verb}': 'balloon'}
         self.assertEqual("These words balloon no sense.",
-                         stories.Replace(test, fields))
+                         stories.StoryTemplate(test).Populate(fields))
 
 
 if __name__ == '__main__':
