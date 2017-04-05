@@ -97,14 +97,6 @@ class StoryCollection(object):
                 raise
         return templates
 
-    def Fields(self, num):
-        '''Return the field set for template #num.'''
-        return self.templates[num][1]
-
-    def Template(self, num):
-        '''Return the string template for #num.'''
-        return self.templates[num].text
-
     def Random(self):
         '''Return a random template number and its fields.'''
         num = random.randint(0, len(self.templates) - 1)
