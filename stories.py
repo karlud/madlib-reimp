@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Operations on story templates.
+#
+# Operations on story templates, including loading them from files on disk.
 
 import os
 import random
