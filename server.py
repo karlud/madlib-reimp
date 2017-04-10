@@ -8,10 +8,11 @@ from socketserver import ThreadingMixIn
 
 import stories
 
-PORT = int(os.environ.get('PORT', 8000))
-
 
 class StoryHandler(http.server.BaseHTTPRequestHandler):
+    '''A request handler that knows about story templates.'''
+
+    # The class variable 'collection' is populated when the server starts.
     collection = None
 
     def _fieldform(self, field):
@@ -57,6 +58,7 @@ class StoryHandler(http.server.BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/plain')
         self.end_headers()
 
+        # TODO: make it HTML instead of text
         self.wfile.write(story.encode())
 
 
@@ -65,7 +67,12 @@ class ThreadHTTPServer(ThreadingMixIn, http.server.HTTPServer):
 
 
 if __name__ == '__main__':
-    address = ('', PORT)
+    # Get port number from environment if present.
+    address = ('', int(os.environ.get('PORT', 8000)))
+
+    # Load the story templates!
     StoryHandler.collection = stories.StoryCollection()
+
+    # Be a server!
     httpd = ThreadHTTPServer(address, StoryHandler)
     httpd.serve_forever()
