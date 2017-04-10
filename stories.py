@@ -74,6 +74,31 @@ class StoryTemplate(object):
             text = text.replace(field, value)
         return text
 
+    def _fieldform(self, field):
+        '''Make a form input for a single field.'''
+        # Field names start out like '{sport}', so remove the curlies.
+        field = field.strip('{}')
+        inp = '<label>{}: <input type=text name="{}"></label><br>'
+        return inp.format(field, field)
+
+    def HTMLForm(self, hidden=''):
+        '''Return an HTML form for this story.
+
+        Args:
+            hidden: optional hidden field (or anything else)
+
+        Returns:
+            string: an HTML document of a form.
+        '''
+        doc = ('<!DOCTYPE html>\n'
+               '<title>Story</title>\n'
+               '<form method=POST>\n{}\n'
+               '<button type=submit>Tell me a story!</button>\n'
+               '</form>')
+        inputs = [self._fieldform(field) for field in self.fields]
+        inputs.append(hidden)
+        return doc.format('\n'.join(inputs))
+
 
 class StoryCollection(object):
     def __init__(self, dirname="stories"):
@@ -99,10 +124,10 @@ class StoryCollection(object):
         return templates
 
     def Random(self):
-        '''Return a random template number and its fields.'''
+        '''Return a random template number and template.'''
         num = random.randint(0, len(self.templates) - 1)
-        return (num, self.templates[num].fields)
+        return (num, self.templates[num])
 
     def Populate(self, num, fieldmap):
         '''Return a populated story from template #num.'''
-        return self.templates[num].Populate(fieldmap)
+        return self.templates[num].Populate(mieldmap)

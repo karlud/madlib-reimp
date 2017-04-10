@@ -15,29 +15,17 @@ class StoryHandler(http.server.BaseHTTPRequestHandler):
     # The class variable 'collection' is populated when the server starts.
     collection = None
 
-    def _fieldform(self, field):
-        '''Make a form input for a single field.'''
-        # Field names start out like '{sport}', so remove the curlies.
-        field = field.strip('{}')
-        inp = '<label>{}: <input type=text name="{}"></label><br>\n'
-        return inp.format(field, field)
-
-    def FieldForm(self):
-        '''Make an HTML form for a set of fields.'''
-        (num, fields) = self.collection.Random()
-        hidden = '<input type=hidden name="TEMPLATE" value="{}">\n'.format(num)
-        inputs = [self._fieldform(field) for field in fields]
-        head = '<!DOCTYPE html><title>Story Teller</title>\n'
-        top = '<form method=POST>\n'
-        bottom = '<button type=submit>Tell me a story!</button></form>\n'
-        form = head + top + hidden + ''.join(inputs) + bottom
-        return form
-
     def do_GET(self):
         self.send_response(200)
         self.send_header('Content-Type', 'text/html')
         self.end_headers()
-        self.wfile.write(self.FieldForm().encode())
+
+        # Pick a random template and make a form with it.
+        (num, tmpl) = self.collection.Random()
+        hidden = '<input type=hidden name="TEMPLATE" value="{}">\n'.format(num)
+        form = tmpl.HTMLForm(hidden)
+
+        self.wfile.write(form.encode())
 
     def do_POST(self):
         # Decode the form fields.

@@ -38,6 +38,20 @@ class TemplateTest(unittest.TestCase):
         self.assertEqual("These words balloon no sense.",
                          stories.StoryTemplate(test).Populate(fields))
 
+    def testHTMLForm(self):
+        text = "My dog ate my {bearclaw}."
+        st = stories.StoryTemplate(text)
+        html = st.HTMLForm(hidden='<input type=hidden name=test value=test>')
+        self.assertEqual(html, (
+            '<!DOCTYPE html>\n'
+            '<title>Story</title>\n'
+            '<form method=POST>\n'
+            '<label>bearclaw: <input type=text name="bearclaw"></label><br>\n'
+            '<input type=hidden name=test value=test>\n'
+            '<button type=submit>Tell me a story!</button>\n'
+            '</form>'))
+
+
 
 if __name__ == '__main__':
     unittest.main()
