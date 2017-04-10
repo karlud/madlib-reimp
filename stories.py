@@ -4,6 +4,7 @@
 
 import os
 import random
+import bleach
 
 
 class ParseError(Exception):
@@ -60,20 +61,6 @@ class StoryTemplate(object):
                     start, tmpl[start:pos]))
         return fields
 
-    def Populate(self, fieldmap):
-        '''Return a populated version of this story, given particular fields.
-
-        Args:
-            fieldmap: a dictionary from fields to values.
-
-        Returns:
-            string: a filled-in version of the story.
-        '''
-        text = self.text
-        for field, value in fieldmap.items():
-            text = text.replace(field, value)
-        return text
-
     def _fieldform(self, field):
         '''Make a form input for a single field.'''
         # Field names start out like '{sport}', so remove the curlies.
@@ -98,6 +85,41 @@ class StoryTemplate(object):
         inputs = [self._fieldform(field) for field in self.fields]
         inputs.append(hidden)
         return doc.format('\n'.join(inputs))
+
+    def Populate(self, fieldmap):
+        '''Return a text version of this story, given field values.
+
+        Args:
+            fieldmap: a dictionary from fields to values.
+
+        Returns:
+            string: a filled-in version of the story.
+        '''
+        text = self.text
+        for field, value in fieldmap.items():
+            text = text.replace(field, value)
+        return text
+
+    def HTMLPopulate(self, fieldmap):
+        '''Return an HTML document version of this story, given field values.
+
+        Args:
+            fieldmap: a dictionary from fields to values.
+
+        Returns:
+            string: an HTML document of a filled-in version of the story.
+        '''
+        text = self.text
+        # TODO: This is really inefficient.
+        for field, value in fieldmap.items():
+            value = bleach.clean(value)
+            decorated = '<strong>{}</strong>'.format(value)
+            text = text.replace(field, decorated)
+        text = text.replace('\n\n', '<p>')
+        text = text.replace('\n', '<br>')
+
+        return ('<!DOCTYPE html>\n'
+                '<title>Story!</title>\n') + text
 
 
 class StoryCollection(object):

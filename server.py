@@ -40,13 +40,12 @@ class StoryHandler(http.server.BaseHTTPRequestHandler):
             else:
                 # Field names have {curlies} on them, so re-add here.
                 fieldmap['{{{}}}'.format(key)] = vals[0]
-        story = self.collection.Populate(tmpl_num, fieldmap)
+        story = self.collection.templates[tmpl_num].HTMLPopulate(fieldmap)
 
         self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
+        self.send_header('Content-type', 'text/html')
         self.end_headers()
 
-        # TODO: make it HTML instead of text
         self.wfile.write(story.encode())
 
 
