@@ -1,13 +1,8 @@
 Last {day of week}, {name} and {other name} went on a fishing trip.
 
-They packed a lot of {food} and some {drinks}, then set out from {a town}
-and headed across the {body of water} in their {vehicle}.  When they got
-to {a warm place}, they stopped and ate their {meal}, washing it down with
-a lot of {drinks}.
+They packed a lot of {food} and some {drinks}, then set out from {a town} and headed across the {body of water} in their {vehicle}.  When they got to {a warm place}, they stopped and ate their {meal}, washing it down with a lot of {drinks}.
 
-By the end of the {part of the day}, they {adverb} remembered to try to
-catch some fish.  They got out their {fishing equipment} from the {vehicle},
-but no {kind of big fish} were to be found.
+By the end of the {part of the day}, they {adverb} remembered to try to catch some fish.  They got out their {fishing equipment} from the {vehicle}, but no {kind of big fish} were to be found.
 
 There weren't even any {kind of small fish}.
 
