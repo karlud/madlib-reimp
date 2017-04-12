@@ -1,5 +1,20 @@
-On {day}, {name} and {other name} went on a fishing trip.
-They got to {body of water} early in the {time of day}.
-They brought a lot of {food items} and some {drinks}.
-When they went out on their {kind of boat}, they found something {adjective}:
-All the fish had moved to {city}!
+Last {day of week}, {name} and {other name} went on a fishing trip.
+
+They packed a lot of {food} and some {drinks}, then set out from {a town}
+and headed across the {body of water} in their {vehicle}.  When they got
+to {a warm place}, they stopped and ate their {meal}, washing it down with
+a lot of {drinks}.
+
+By the end of the {part of the day}, they {adverb} remembered to try to
+catch some fish.  They got out their {fishing equipment} from the {vehicle},
+but no {kind of big fish} were to be found.
+
+There weren't even any {kind of small fish}.
+
+"{exclamation}!" said {name}.
+
+"{exclamation}!" said {other name}.
+
+By the time they got back to {a town}, they realized:
+
+All the {kind of big fish} and {kind of small fish} had moved to {foreign land}!

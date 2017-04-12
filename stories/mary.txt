@@ -1,7 +1,4 @@
-Mary is a {profession}.
-On Mary's first day on the job, she met a(n) {adjective} {job role}.
-The {job role} was very {attitude} toward Mary, which made her {feeling}.
-Mary said "{exclamation}! I am so {emotion} right now!"
-The {job role} was totally {reaction} about it, and just said,
-"Welcome to {profession}sville, Mary!"
-
+{name} had a little {animal},
+Its {body part} as {color} as {weather}.
+And everywhere that {name} went,
+The {animal} was sure to {verb}.

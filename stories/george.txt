@@ -1,9 +1,0 @@
-George has a friend named {name}.
-George thinks that {name} is a great {sport} player.
-{name} {motion verb}s all day.
-
-When George and {name} first met, {name} was coming back from
-a {size} {sport} game.  {name}'s team had just won the {athletic prize}.
-
-The team captain, {silly name}, had just declared {name} to be "most {adjective} player".
-George was really {emotion} to meet a person who was as {adjective} as {name}.
